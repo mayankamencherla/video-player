@@ -1,30 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="player.css">
-    </head>
-    <body>
-        <div id="player">
-            <div id="video-container">
-                <video poster="media/thumbnail.png">
-                    <source src="media/sample.mp4">
-                    It seems your browser doesn't support the HTML5 video tag. Please update it.
-                </video>    
-            </div>
-            <div id="pbar-container">
-                <div id="pbar"></div>
-            </div>
-            <div id="buttons">
-                <image id="play-button" src="media/play.png">
-                <div id="time-fields">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/player.css">
+    <script type="text/javascript" src="js/player.js"></script>
+</head>
+
+<body>
+    <div id="player">
+        <div id="video-container">
+            <video id="video" poster="media/thumbnail.png">
+                <source src="media/sample.mp4"> 
+                It seems your browser doesn't support the HTML5 video tag. Please update it.
+            </video>
+        </div>
+        <div id="pbar-container">
+            <div id="pbar"></div>
+        </div>
+        <div id="buttons-container">
+            <image id="play-button" src="media/play.png">
+                <div id="time-field">
                     0:00 / 0:00
                 </div>
-                <image id="sound-button" src="media/sound.png">
+            <image id="sound-button" src="media/sound.png">
                 <div id="sbar-container">
                     <div id="sbar"></div>
                 </div>
-                <image id="fullscreen-button" src="media/fullscreen.png">
-            </div>
+            <image id="fullscreen-button" src="media/fullscreen.png">
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
