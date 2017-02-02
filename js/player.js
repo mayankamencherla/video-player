@@ -5,12 +5,15 @@ window.addEventListener('load', () => {
     // Get the elements of the form as global variables
     pbar = document.getElementById('pbar');
     pbarContainer = document.getElementById('pbar-container');
-    playButton = document.getElementById('play-button');
-    fullscreenButton = document.getElementById('fullscreen-button');
-    soundButton = document.getElementById('sound-button');
     sbar = document.getElementById('sbar');
     sbarContainer = document.getElementById('sbar-container');
     timeField = document.getElementById('time-field');
+    videoScreen = document.getElementById('screen');
+
+    playButton = document.getElementById('play-button');
+    fullscreenButton = document.getElementById('fullscreen-button');
+    soundButton = document.getElementById('sound-button');
+    screenButton = document.getElementById('screen-button');
 
     video.load();
     // canplay event listener for video
@@ -26,6 +29,8 @@ window.addEventListener('load', () => {
         soundButton.addEventListener('click', muteOrUnmute, false);
         // changing volume
         sbarContainer.addEventListener('click', volume, false);
+        // play and pause from screen button
+        screenButton.addEventListener('click', playOrPause, false);
     }, false);
 
 }, false);
@@ -37,19 +42,29 @@ var playOrPause = () => {
         playButton.src = 'media/pause.png';
         // run every 30 ms
         update = setInterval(updatePlayer, 30); 
+        videoScreen.style.display = 'none';
+        screenButton.src = 'media/play.png';
     } else {
         video.pause();
         playButton.src = 'media/play.png';
         // interval back to zero
         window.clearInterval(update);
+        videoScreen.style.display = 'block';
+        screenButton.src = 'media/play.png';
     }
 };
 
 // modify screen size on button click
 var fullscreenOrNot = () => {
-    // Enter full screen if screen is not full screen
-    // Enter normal screen if screen is full screen
-    video.fullscreen();
+    if (video.requestFullscreen){
+        video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen){
+        video.webkitRequestFullscreen();
+    } else if (video.mozRequestFullscreen){
+        video.mozRequestFullscreen();
+    } else if (video.msRequestFullscreen){
+        video.msRequestFullscreen();
+    }
 };
 
 var updatePlayer = () => {
@@ -63,6 +78,12 @@ var updatePlayer = () => {
     if (video.ended){
         window.clearInterval(update);
         playButton.src = 'media/replay.png';
+
+        videoScreen.style.display = 'block';
+        screenButton.src = 'media/replay.png';
+    } else if (video.paused){
+        screenButton.src = 'media/play.png';
+        playButton.src = 'media/play.png';
     }
 };
 
