@@ -3,11 +3,13 @@ window.addEventListener('load', () => {
     video = document.getElementById('video');
     
     // Get the elements of the form as global variables
-    playButton = document.getElementById('play-button');
-    fullscreenButton = document.getElementById('fullscreen-button');
     pbar = document.getElementById('pbar');
     pbarContainer = document.getElementById('pbar-container');
+    playButton = document.getElementById('play-button');
+    fullscreenButton = document.getElementById('fullscreen-button');
     soundButton = document.getElementById('sound-button');
+    sbar = document.getElementById('sbar');
+    sbarContainer = document.getElementById('sbar-container');
     timeField = document.getElementById('time-field');
 
     video.load();
@@ -21,7 +23,9 @@ window.addEventListener('load', () => {
         // button to make the video fullscreen
         fullscreenButton.addEventListener('click', fullscreenOrNot, false);
         // Toggle mute
-        // soundButton.addEventListener('click', muteOrNot, false);
+        soundButton.addEventListener('click', muteOrUnmute, false);
+        // changing volume
+        sbarContainer.addEventListener('click', volume, false);
     }, false);
 
 }, false);
@@ -93,3 +97,30 @@ var getFormattedTime = (time) => {
 
     return minutes + ':' + seconds;
 };
+
+var muteOrUnmute = () => {
+    if (!video.muted){
+        video.muted = true;
+        soundButton.src = 'media/mute.png';
+        sbar.style.display = 'none';
+    } else {
+        video.muted = false;
+        soundButton.src = 'media/sound.png';
+        sbar.style.display = 'block';
+    }
+};
+
+var volume = (event) => {
+    var mousex = event.pageX - sbarContainer.offsetLeft; 
+    var barwidth = window.getComputedStyle(sbarContainer).getPropertyValue('width'); 
+
+    var width = parseFloat(barwidth.substr(0, barwidth.length - 2));
+
+    video.volume = (mousex / width);
+    sbar.style.width = video.volume * 100 + '%';
+    
+    // unmute volume on click
+    video.muted = false;
+    soundButton.src = 'media/sound.png';
+    sbar.style.display = 'block';
+}
