@@ -35,6 +35,14 @@ window.addEventListener('load', () => {
 
 }, false);
 
+// spacebar pause or play
+document.addEventListener('keydown', function(event) {
+    // spacebar to pause or play
+    if(event.keyCode == 32) {
+        playOrPause();
+    }
+});
+
 // play or pause on button click
 var playOrPause = () => {
     if (video.paused){
